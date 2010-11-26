@@ -1,0 +1,11 @@
+import sys
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+import pywapi
+import time
+import dsotd.Applet
+
+class WeatherApplet(Applet):
+	def __init__(self):
+		Applet.__init__(self)
+

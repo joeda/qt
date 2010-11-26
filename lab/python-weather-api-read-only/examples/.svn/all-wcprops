@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/108/trunk/examples
+END
+pywapi-countries-example.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/108/trunk/examples/pywapi-countries-example.py
+END
+pywapi-google-example.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/108/trunk/examples/pywapi-google-example.py
+END
+pywapi-noaa-example.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/108/trunk/examples/pywapi-noaa-example.py
+END
+pywapi-yahoo-example.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/108/trunk/examples/pywapi-yahoo-example.py
+END
+pywapi-cities-example.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/108/trunk/examples/pywapi-cities-example.py
+END
+pywapi-example.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/108/trunk/examples/pywapi-example.py
+END
