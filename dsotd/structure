@@ -1,0 +1,7 @@
+*2 threads: 
+  #data_fetcher -> performs actions specified by individual applets on a regular
+  basis or on an extern call, initialises stuff
+  #Main -> renders stuff
+
+*1 thread
+  #Main -> renders stuff, fetches data on startup
