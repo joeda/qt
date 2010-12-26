@@ -9,10 +9,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtSvg import *
 from groupbox_test_ui import Ui_info_box
 import collections
-import dbus.mainloop.qt
-import dbus
-import dbus.service
-
+from dbus_interface import *
 
 weather = collections.namedtuple("Weather", "temperature condition icon")
 
@@ -25,36 +22,6 @@ class WeatherGetter(object):
     def get_weather(self):
         pass
 
-class SignalEmitter(QObject):
-
-    trigger = pyqtSignal()
-    def __init__(self):
-        QObject.__init__(self, parent=None)
-        self.connect(self, SIGNAL("hide_weather"), qApp, SLOT("quit()"))
-
-    def emit_signal(self):
-        self.emit(SIGNAL("hide_weather"))
-
-class DBusInterface(dbus.service.Object):
-
-    def __init__(self):
-        session_bus = dbus.SessionBus()
-        busName = dbus.service.BusName('org.joeda.weather_interface', session_bus)
-        dbus.service.Object.__init__(self, busName, '/weather_interface')
-        self.signal_emitter = SignalEmitter()
-
-    @dbus.service.method("org.joeda.weather_interface", 
-            in_signature="", out_signature="i")
-    def HideWeather(self):
-        self.signal_emitter.emit_signal()
-        return 0
-
-    @dbus.service.method("org.joeda.weather_interface",
-            in_signature="", out_signature="s")
-    def Hello(self):
-        return "Hello, Human!"
-    
-dbus.mainloop.qt.DBusQtMainLoop(set_as_default = True)
 
 class ForecastWidget(QGroupBox):
 
@@ -66,6 +33,7 @@ class ForecastWidget(QGroupBox):
         self.trigger.connect(self.set_weather)
         self.connect(self.ui.weather_setter, SIGNAL("clicked()"), self.display_stuff)
         self.connect(self.ui.quitter, SIGNAL("clicked()"), qApp, SLOT("quit()"))
+        self.connect(self.parent(), SIGNAL("close_pressed"), self.display_stuff)
 
     def display_stuff(self):
         self.trigger.emit({"high":"20", "low":"10", "condition":"fail"})
@@ -80,22 +48,41 @@ class ForecastWidget(QGroupBox):
 class MainWindow(QWidget):
     def __init__(self):
         QWidget.__init__(self)
-        self.setWindowFlags(Qt.Dialog | Qt.X11BypassWindowManagerHint)
-        forecast1 = ForecastWidget(self)
-        forecast2 = ForecastWidget(self)
+        self.setWindowFlags(Qt.Dialog)
+        self.forecast1 = ForecastWidget(self)
+        self.forecast2 = ForecastWidget(self)
         hbox = QHBoxLayout()
-        hbox.addWidget(forecast2)
-        hbox.addWidget(forecast1)
+        hbox.addWidget(self.forecast2)
+        hbox.addWidget(self.forecast1)
         vbox = QVBoxLayout()
         #vbox.addStretch(1)
         vbox.addLayout(hbox)
 
         self.setLayout(vbox)
-        self.resize(900, 600)
+        self.resize(400, 300)
+        self.setFocus()
 
+    def show_on_dbus_signal(self):
+        self.show()
 
-app = QApplication(sys.argv)
-main = MainWindow()
-main.show()
-db = DBusInterface()
-app.exec_()
+    def event(self, event):
+#        if (event.type()==QEvent.KeyRelease) and ((event.key() == Qt.Key_Super_L)
+#                or (event.key() == Qt.Key_T)) and event.isAutoRepeat() == False:
+        if event.type() == QEvent.KeyPress or event.type() == QEvent.KeyRelease:
+            print "event type: " + str(event.type())
+            print "event key: " + str(event.key())
+            print "is autorepeat: " + str(event.isAutoRepeat())
+            self.emit(SIGNAL("close_pressed"))
+            return True
+
+        return QWidget.event(self, event)
+
+def main():
+    dbus.mainloop.qt.DBusQtMainLoop(set_as_default = True)
+    app = QApplication(sys.argv)
+    main_win = MainWindow()
+    db = DBusInterface(main_win)
+    app.exec_()
+    
+if __name__ == "__main__":
+    main()
