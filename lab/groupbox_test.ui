@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>204</width>
-    <height>137</height>
+    <height>174</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,6 +85,19 @@
    </property>
    <property name="text">
     <string>Set Weather</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="quitter">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>140</y>
+     <width>84</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quit</string>
    </property>
   </widget>
  </widget>

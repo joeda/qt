@@ -2,35 +2,43 @@
 
 # Form implementation generated from reading ui file 'groupbox_test.ui'
 #
-# Created: Sat Sep 25 12:11:22 2010
-#      by: PyQt4 UI code generator 4.7.4
+# Created: Sat Dec 25 20:30:16 2010
+#      by: PyQt4 UI code generator 4.8.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    _fromUtf8 = lambda s: s
+
 class Ui_info_box(object):
     def setupUi(self, info_box):
-        info_box.setObjectName("info_box")
-        info_box.resize(204, 137)
+        info_box.setObjectName(_fromUtf8("info_box"))
+        info_box.resize(204, 174)
         info_box.setFlat(False)
         info_box.setCheckable(False)
         info_box.setChecked(False)
         self.weather_icon = QSvgWidget(info_box)
         self.weather_icon.setGeometry(QtCore.QRect(30, 50, 50, 50))
-        self.weather_icon.setObjectName("weather_icon")
+        self.weather_icon.setObjectName(_fromUtf8("weather_icon"))
         self.temp_high = QtGui.QLabel(info_box)
         self.temp_high.setGeometry(QtCore.QRect(110, 50, 64, 17))
-        self.temp_high.setObjectName("temp_high")
+        self.temp_high.setObjectName(_fromUtf8("temp_high"))
         self.condition = QtGui.QLabel(info_box)
         self.condition.setGeometry(QtCore.QRect(20, 110, 64, 17))
-        self.condition.setObjectName("condition")
+        self.condition.setObjectName(_fromUtf8("condition"))
         self.temp_low = QtGui.QLabel(info_box)
         self.temp_low.setGeometry(QtCore.QRect(110, 80, 64, 17))
-        self.temp_low.setObjectName("temp_low")
+        self.temp_low.setObjectName(_fromUtf8("temp_low"))
         self.weather_setter = QtGui.QPushButton(info_box)
         self.weather_setter.setGeometry(QtCore.QRect(80, 100, 114, 27))
-        self.weather_setter.setObjectName("weather_setter")
+        self.weather_setter.setObjectName(_fromUtf8("weather_setter"))
+        self.quitter = QtGui.QPushButton(info_box)
+        self.quitter.setGeometry(QtCore.QRect(50, 140, 84, 22))
+        self.quitter.setObjectName(_fromUtf8("quitter"))
 
         self.retranslateUi(info_box)
         QtCore.QMetaObject.connectSlotsByName(info_box)
@@ -42,5 +50,6 @@ class Ui_info_box(object):
         self.condition.setText(QtGui.QApplication.translate("info_box", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.temp_low.setText(QtGui.QApplication.translate("info_box", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.weather_setter.setText(QtGui.QApplication.translate("info_box", "Set Weather", None, QtGui.QApplication.UnicodeUTF8))
+        self.quitter.setText(QtGui.QApplication.translate("info_box", "Quit", None, QtGui.QApplication.UnicodeUTF8))
 
 from PyQt4.QtSvg import QSvgWidget
