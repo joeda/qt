@@ -10,7 +10,7 @@ class SignalEmitter(QObject):
     trigger = pyqtSignal()
     def __init__(self, reciever_object):
         QObject.__init__(self, parent=None)
-        self.trigger.connect(reciever_object.show_on_dbus_signal)
+        self.trigger.connect(reciever_object.show)
 
     def emit_signal(self):
         self.trigger.emit()
