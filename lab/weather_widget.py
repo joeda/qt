@@ -38,3 +38,21 @@ class ForecastWidget(QGroupBox):
         self.ui.condition.setText(weather_data["condition"])
         self.ui.weather_icon.load("/usr/share/icons/ubuntu-mono-dark/status/24/sunny.svg")
 
+class DataEngine(QObject):
+	
+	signal_set_data = pyqtSignal(dict)
+	def __init__(self, location_code):
+		QObject.__init__(self, parent)
+		self.location_code = location_code
+		self.data = None
+	
+	def set_data(self):
+		self.signal_set_data.emit(self.data)
+	
+	def update_data(self, location_code):
+		new_data = pywapi.get_weather_from_google(location_code)
+		if new_data != self.data:
+			self.data = new_data
+			self.set_data()
+		else:
+			new_data = None
