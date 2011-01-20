@@ -19,13 +19,10 @@ MAIN_WIN_HEIGHT = 500
 MAIN_WIN_WIDTH = 600
 
 
-class WeatherGetter(object):
-
-    def __init__(self):
-        pass
-
-    def get_weather(self):
-        pass
+class DataThread(QObject):
+	
+	def __init__(self):
+		QObject.__init__(self, parent)
 
 
 class MainWindow(QWidget):
