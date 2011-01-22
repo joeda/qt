@@ -25,7 +25,7 @@ class ForecastWidget(QGroupBox):
         QGroupBox.__init__(self, parent)
         self.ui = Ui_info_box()
         self.ui.setupUi(self)
-        self.trigger.connect(self.set_weather)
+        self.trigger.connect(self.set_data)
         self.connect(self.ui.weather_setter, SIGNAL("clicked()"), self.display_stuff)
         self.connect(self.ui.quitter, SIGNAL("clicked()"), qApp, SLOT("quit()"))
         self.connect(self.parent(), SIGNAL("close_pressed"), self.display_stuff)
@@ -49,19 +49,19 @@ class ForecastWidget(QGroupBox):
 		'condition': u'Mostly Sunny', 'low': u'28', 'day_of_week': u'Sun',
 		'icon': u'/ig/images/weather/mostly_sunny.gif'}]})
 
-    def set_weather(self, weather_data):
+    def set_data(self, weather_data):
         self.ui.temp_high.setText(u"Current Temp.: " + 
         weather_data["current_conditions"]["temp_c"])
         self.ui.temp_low.setText(u"Morning High: " +
-        weather_data["forecast_information"][1]["high"])
-        self.ui.condition.setText(u"Current Condidtions: " +
+        weather_data["forecasts"][1]["high"])
+        self.ui.condition.setText(u"Current Conditions: " +
         weather_data["current_conditions"]["condition"])
         self.ui.weather_icon.load("/usr/share/icons/ubuntu-mono-dark/status/24/sunny.svg")
 
 class DataEngine(QObject):
 	
 	signal_set_data = pyqtSignal(dict)
-	def __init__(self, location_code):
+	def __init__(self, location_code=u"groetzingen", parent=None):
 		QObject.__init__(self, parent)
 		self.location_code = location_code
 		self.data = None
@@ -69,8 +69,8 @@ class DataEngine(QObject):
 	def set_data(self):
 		self.signal_set_data.emit(self.data)
 	
-	def update_data(self, location_code):
-		new_data = pywapi.get_weather_from_google(location_code)
+	def update_data(self):
+		new_data = pywapi.get_weather_from_google(self.location_code)
 		if new_data != self.data:
 			self.data = new_data
 			self.set_data()
