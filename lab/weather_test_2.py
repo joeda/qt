@@ -12,6 +12,7 @@ from dbus_interface import *
 from clock_widget import ClockWidget
 from weather_widget import WeatherWidget
 from weather_widget import DataEngine
+import os
 
 weather = collections.namedtuple("Weather", "temperature condition icon")
 
@@ -19,6 +20,8 @@ weather = collections.namedtuple("Weather", "temperature condition icon")
 MAIN_WIN_HEIGHT = 500
 MAIN_WIN_WIDTH = 600
 LOCATION_CODE = "Karlsruhe"
+CONFIG_DIR = os.getcwd()
+CONFFILE_NAME_DATA = "config_data_thread.json"
 
 
 
@@ -27,7 +30,7 @@ class ConfigParser(object):
 	def __init__(self, config_dir=None):
 		self.config_dir = config_dir
 
-	def setup_config(self, conffile_name):
+	def get_config(self, conffile_name):
 		
 		# The directories follow the freedesktop.org standards, except that
 		# custom applets go to XDG_CONFIG_HOME/dsotd/applets
@@ -44,12 +47,26 @@ class ConfigParser(object):
 		return self.config
 
 
+class WidgetsDirectoryParser(object):
+    
+    def __init__(self):
+        pass
+    
+    def look_for_widgets(self, directory, list_of_necessary_files=None):
+        widgets = []
+        os.chdir(directory)
+        entries = os.listdir(directory)
+        for entry in entries:
+            if os.path.isdir(entry):
+                for the_file in list_of_necessary_files:
 
 
 class DataThread(QObject):
 	
 	def __init__(self, parent=None):
 		QObject.__init__(self, parent)
+		self.config_parser = ConfigParser(config_dir=CONFIG_DIR)
+		self.config = self.config_parser.get_config(CONFFILE_NAME_DATA)
 		self.thread = WindowThread()
 		self.weather_data_engine = DataEngine(location_code=LOCATION_CODE)
 		self.weather_data_engine.signal_set_data.connect(

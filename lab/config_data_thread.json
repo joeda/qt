@@ -1,0 +1,8 @@
+{
+    "engines": {
+        "weather_forecast": {
+            "update_interval": 1800,
+            "location_code": "Karlsruhe"
+        }
+    }
+}
