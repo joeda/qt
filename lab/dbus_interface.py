@@ -1,4 +1,4 @@
-import dbus
+iimport dbus
 import dbus.service
 from PyQt4.QtCore import *
 import dbus.mainloop.qt

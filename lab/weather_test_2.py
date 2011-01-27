@@ -23,6 +23,7 @@ LOCATION_CODE = "Karlsruhe"
 CONFIG_DIR = os.getcwd()
 CONFFILE_NAME_DATA = "config_data_thread.json"
 ENGINES_NAME_IN_CONFIG = "engines"
+ENGINES_DIR_NAME_IN_CONFIG = "engines_directory"
 
 
 
@@ -80,7 +81,7 @@ class DataThread(QObject):
 		self.weather_data_engine.update_data()
 
 	def _update_path(self):
-		sys.path.append(
+		sys.path.append(self.config[ENGINES_DIR_NAME_IN_CONFIG])
 
 	def _setup_engines(self):
 		return_dict = {}
