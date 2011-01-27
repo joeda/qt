@@ -22,6 +22,7 @@ MAIN_WIN_WIDTH = 600
 LOCATION_CODE = "Karlsruhe"
 CONFIG_DIR = os.getcwd()
 CONFFILE_NAME_DATA = "config_data_thread.json"
+ENGINES_NAME_IN_CONFIG = "engines"
 
 
 
@@ -59,6 +60,9 @@ class WidgetsDirectoryParser(object):
         for entry in entries:
             if os.path.isdir(entry):
                 for the_file in list_of_necessary_files:
+					if os.access(os.path.join(entry, the_file), os.R_OK):
+						widgets.append(entry)
+		return widgets
 
 
 class DataThread(QObject):
@@ -67,11 +71,22 @@ class DataThread(QObject):
 		QObject.__init__(self, parent)
 		self.config_parser = ConfigParser(config_dir=CONFIG_DIR)
 		self.config = self.config_parser.get_config(CONFFILE_NAME_DATA)
+		self._update_path()
+		self.engines = self._setup_engines()
 		self.thread = WindowThread()
 		self.weather_data_engine = DataEngine(location_code=LOCATION_CODE)
 		self.weather_data_engine.signal_set_data.connect(
 		self.thread.main_window.weather_widget.forecast1.set_data)
 		self.weather_data_engine.update_data()
+
+	def _update_path(self):
+		sys.path.append(
+
+	def _setup_engines(self):
+		return_dict = {}
+		engines = self.config[ENGINES_NAME_IN_CONFIG].keys()
+		for engine in engines:
+			
 
 
 class WindowThread(QThread):

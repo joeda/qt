@@ -1,4 +1,5 @@
 {
+	"engines_directory": "/home/jo/dev/python/qt/lab/widgets",
     "engines": {
         "weather_forecast": {
             "update_interval": 1800,
