@@ -5,9 +5,9 @@ from PyQt4.QtGui import *
 class Window(QWidget):
 
     def __init__(self, parent = None):
-    
+
         QWidget.__init__(self, parent)
-        
+
         self.thread = Worker()
         label = QLabel(self.tr("Number of stars:"))
         self.spinBox = QSpinBox()
@@ -29,11 +29,11 @@ class Window(QWidget):
         layout.addWidget(self.startButton, 0, 2)
         layout.addWidget(self.viewer, 1, 0, 1, 3)
         self.setLayout(layout)
-        
+
         self.setWindowTitle(self.tr("Simple Threading Example"))
 
     def makePicture(self):
-    
+
         self.spinBox.setReadOnly(True)
         self.startButton.setEnabled(False)
         pixmap = QPixmap(self.viewer.size())
@@ -42,7 +42,7 @@ class Window(QWidget):
         self.thread.render(self.viewer.size(), self.spinBox.value())
 
     def addImage(self, rect, image):
-    
+
         pixmap = self.viewer.pixmap()
         painter = QPainter()
         painter.begin(pixmap)
@@ -51,14 +51,14 @@ class Window(QWidget):
         self.viewer.update(rect)
 
     def updateUi(self):
-    
+
         self.spinBox.setReadOnly(False)
         self.startButton.setEnabled(True)
 
 class Worker(QThread):
 
     def __init__(self, parent = None):
-    
+
         QThread.__init__(self, parent)
         self.exiting = False
         self.size = QSize(0, 0)
@@ -81,32 +81,32 @@ class Worker(QThread):
         self.path.closeSubpath()
 
     def __del__(self):
-    
+
         self.exiting = True
         self.wait()
 
     def render(self, size, stars):
-    
+
         self.size = size
         self.stars = stars
         self.start()
 
     def run(self):
-        
+
         # Note: This is never called directly. It is called by Qt once the
         # thread environment has been set up.
-        
+
         random.seed()
         n = self.stars
         width = self.size.width()
         height = self.size.height()
 
         while not self.exiting and n > 0:
-        
+
             image = QImage(self.outerRadius * 2, self.outerRadius * 2,
                            QImage.Format_ARGB32)
             image.fill(qRgba(0, 0, 0, 0))
-            
+
             x = random.randrange(0, width)
             y = random.randrange(0, height)
             angle = random.randrange(0, 360)
@@ -114,7 +114,7 @@ class Worker(QThread):
             green = random.randrange(0, 256)
             blue = random.randrange(0, 256)
             alpha = random.randrange(0, 256)
-            
+
             painter = QPainter()
             painter.begin(image)
             painter.setRenderHint(QPainter.Antialiasing)
@@ -136,4 +136,3 @@ if __name__ == "__main__":
     window = Window()
     window.show()
     sys.exit(app.exec_())
-

@@ -1,4 +1,4 @@
-iimport dbus
+import dbus
 import dbus.service
 from PyQt4.QtCore import *
 import dbus.mainloop.qt
@@ -23,7 +23,7 @@ class DBusInterface(dbus.service.Object):
         dbus.service.Object.__init__(self, busName, '/weather_interface')
         self.signal_emitter = SignalEmitter(reciever_object)
 
-    @dbus.service.method("org.joeda.weather_interface", 
+    @dbus.service.method("org.joeda.weather_interface",
             in_signature="", out_signature="i")
     def HideWeather(self):
         self.signal_emitter.emit_signal()

@@ -4,7 +4,7 @@
 #
 # This example shows
 # how to use QSplitter widget
-# 
+#
 # author: Jan Bodnar
 # website: zetcode.com
 # last edited: February 2010
@@ -26,7 +26,7 @@ class Example(QtGui.QWidget):
 
         topleft = QtGui.QFrame(self)
         topleft.setFrameShape(QtGui.QFrame.StyledPanel)
- 
+
         topright = QtGui.QFrame(self)
         topright.setFrameShape(QtGui.QFrame.StyledPanel)
 
@@ -47,10 +47,9 @@ class Example(QtGui.QWidget):
         self.setGeometry(250, 200, 350, 250)
         self.setWindowTitle('QSplitter')
 
-    
+
 
 app = QtGui.QApplication([])
 exm = Example()
 exm.show()
 app.exec_()
-

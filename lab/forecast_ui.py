@@ -33,4 +33,3 @@ class Ui_Form(object):
         self.groupBox.setTitle(QtGui.QApplication.translate("Form", "Today", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.weather_icon.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-

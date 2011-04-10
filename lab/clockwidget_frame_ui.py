@@ -35,4 +35,3 @@ class Ui_Frame(object):
     def retranslateUi(self, Frame):
         Frame.setWindowTitle(QtGui.QApplication.translate("Frame", "Frame", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Frame", "kahsdfhasdhfljkahsdjfklhajklsdfhjklahsfdjhasjdfhajlkshdfjalhsdflhasjkldfhakhsdfjklhasdjklfhajksdhfjkahsf", None, QtGui.QApplication.UnicodeUTF8))
-
